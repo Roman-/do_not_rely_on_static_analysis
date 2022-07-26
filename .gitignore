@@ -1,0 +1,14 @@
+# idea
+.idea
+.ccls-cache
+
+# build
+build
+cmake-build-*/
+
+# tmp files
+*~
+
+# vim
+[._]*.sw[a-p]
+tags
