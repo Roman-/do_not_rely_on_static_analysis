@@ -102,3 +102,39 @@ int main(int argc, char *argv[]) {
     return f();
 }
 ```
+# lambda captured object gets deleted
+## level 1
+This may print "hello world" or just crash.
+PVS-Studio gives V1047 (Lifetime of the lambda is greater than lifetime of the local variable 'hello_world' captured by reference)
+```cpp
+int main(int argc, char *argv[]) {
+    std::function<void()> print_hello_world;
+    {
+        std::string hello_world = "hello world!\n";
+        print_hello_world = [&](){std::cout << hello_world;};
+    }
+    print_hello_world();
+    return 0;
+}
+```
+
+## level 2
+But here's an example that more closely resembles the real bug found in one of the projects. Neither PVS-Studio nor cppcheck detect the issue.
+```cpp
+std::function<void()> print_hello_world;
+
+void set_callback(std::function<void()> cb) {
+    print_hello_world = cb;
+}
+
+void init() {
+    std::string hello_world = "hello world!\n";
+    set_callback([&](){std::cout << hello_world;});
+}
+
+int main(int argc, char *argv[]) {
+    init();
+    print_hello_world();
+    return 0;
+}
+```
