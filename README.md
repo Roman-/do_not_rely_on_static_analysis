@@ -1,5 +1,5 @@
 # static analysis is feeble
-The purpose of this repository is to collect C++ code examples containing bugs that can be seemingly easily detected with static analysis tools. Each example application either crash or may crash, and one might expect that the reason for the crash must be detected with static analysis. Yet none the tools from the list below has detected any problems in none of the programs from this repo.
+The purpose of this repository is to collect C++ code examples containing bugs that can be seemingly easily detected with static analysis tools. Each example application either crash or may crash, and one might expect that the reason for the crash must easily be detected with static analysis. Yet none of the tools listed below have detected any problems in none of the programs from this repo.
 
 # tools
 The list of static analysis tools tested to detect bugs in each of the examples:
