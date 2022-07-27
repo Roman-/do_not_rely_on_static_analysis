@@ -17,7 +17,7 @@ make
 
 # unspecified evaluation order
 ## level 1
-Quite obvious and easily detected with `-Wunsequenced` clang diagnostics:
+Quite obvious and is detected with some tools, including `-Wunsequenced` clang diagnostics:
 ```cpp
 void foo(int a, int b) {
     std::cout << a << ", " << b << std::endl;
@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 ```
 
 ## level 2
-Quite obvious but and also detected with `clang -std=c++14 -Wunsequenced`:
+Quite obvious and only detected with `clang -std=c++14 -Wunsequenced`:
 ```cpp
 int main(int argc, char *argv[]) {
     std::map<int, int> m;
