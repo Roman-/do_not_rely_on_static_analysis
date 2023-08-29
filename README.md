@@ -1,5 +1,5 @@
 # Do not rely on static analysis
-The purpose of this repository is to collect C++ code examples containing bugs that can be seemingly easily detected with static analysis tools. Each example application either crash or may crash, and one might expect that the reason for the crash must easily be detected with static analysis. Yet none of the tools listed below have detected any problems in none of the programs from this repo.
+C++ code examples with bugs that should seemingly be easily detected with static analysis tools, yet they are not.
 
 # tools
 The list of static analysis tools tested to detect bugs in each of the examples:
@@ -14,6 +14,24 @@ mkdir build && cd build
 cmake ..
 make
 ```
+
+# unordered map invalidation
+## level 1
+As of September 2023, no static analysis tools are able to detect this:
+```cpp
+int main(int argc, char *argv[]) {
+    std::unordered_map<int, int> my_map = {{1, 10}, {2, 20}, {3, 30}};
+
+    for (const auto& p : my_map) {
+        if (p.first == 2) {
+            my_map.erase(p.first);
+        }
+    }
+    std::cout << my_map.size() << std::endl;
+    return 0;
+}
+```
+No clang-tidy checks provided for this issue. [PVS‑Studio](https://pvs-studio.com/) also and cppcheck also show no warnings.
 
 # unspecified evaluation order
 ## level 1
