@@ -16,7 +16,6 @@ make
 ```
 
 # unordered map invalidation
-## level 1
 As of September 2023, no static analysis tools are able to detect this:
 ```cpp
 int main(int argc, char *argv[]) {
