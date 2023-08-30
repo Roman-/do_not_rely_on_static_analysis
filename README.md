@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 ```
-No clang-tidy checks provided for this issue. [PVS‑Studio](https://pvs-studio.com/) also and cppcheck also show no warnings.
+No clang-tidy checks provided for this issue. Cppcheck also show no warnings, and [PVS‑Studio](https://pvs-studio.com/) team mailed me that their [V789](https://pvs-studio.ru/ru/docs/warnings/v789/) diagnostic needs a fix to detect this.
 
 # unspecified evaluation order
 ## level 1
