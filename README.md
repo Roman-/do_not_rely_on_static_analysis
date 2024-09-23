@@ -18,7 +18,7 @@ make
 # unordered map invalidation
 As of September 2023, no static analysis tools are able to detect this:
 ```cpp
-int main(int argc, char *argv[]) {
+int main() {
     std::unordered_map<int, int> my_map = {{1, 10}, {2, 20}, {3, 30}};
 
     for (const auto& p : my_map) {
@@ -40,7 +40,7 @@ void foo(int a, int b) {
     std::cout << a << ", " << b << std::endl;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     int i = 0;
     foo(++i, --i);
 }
@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 ## level 2
 Quite obvious and only detected with `clang -std=c++14 -Wunsequenced`:
 ```cpp
-int main(int argc, char *argv[]) {
+int main() {
     std::map<int, int> m;
     int i = 0;
     m[++i] = --i;
@@ -87,7 +87,7 @@ private:
     std::unordered_map<Object*, Wrapper> objects_;
 };
 
-int main(int argc, char *argv[]) {
+int main() {
     ObjectRegistry registry;
     Wrapper w{std::make_unique<Object>(), "first object"};
     registry.add_object(w);
@@ -100,7 +100,7 @@ This is self-explanatory:
 ```cpp
 #include <functional>
 
-int main(int argc, char *argv[]) {
+int main() {
     std::function<int()> f;
     return f();
 }
@@ -113,7 +113,7 @@ void maybe_initialize(std::function<int()>& f) {
         f = [](){return 42;};
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     std::function<int()> f;
     maybe_initialize(f);
     return f();
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
 This may print "hello world" or just crash.
 PVS-Studio gives V1047 (Lifetime of the lambda is greater than lifetime of the local variable 'hello_world' captured by reference)
 ```cpp
-int main(int argc, char *argv[]) {
+int main() {
     std::function<void()> print_hello_world;
     {
         std::string hello_world = "hello world!\n";
@@ -149,7 +149,7 @@ void init() {
     set_callback([&](){std::cout << hello_world;});
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     init();
     print_hello_world();
     return 0;
@@ -184,7 +184,7 @@ void pop_until_3(std::queue<int>& q) {
     std::cout << "Now queue size is " << q.size() << ".\n";
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     std::queue<int> my_queue;
     my_queue.push(1);
     my_queue.push(2);
