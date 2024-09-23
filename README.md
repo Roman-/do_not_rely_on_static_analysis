@@ -158,6 +158,18 @@ int main(int argc, char *argv[]) {
 
 # pop from queue
 Calling `pop()` on the empty queue:
+## Level 1
+```cpp
+int main() {
+    std::queue<int> q;
+    q.push(42); // q has one element
+    q.pop(); // q has no elements
+    q.pop(); // UB
+    return 0;
+}
+```
+
+## Level 2
 ```cpp
 void pop_until_3(std::queue<int>& q) {
     while (!q.empty() && q.front() != 3) {
